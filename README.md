@@ -10,7 +10,7 @@ A web tool to **generate strong passwords**, **check password strength**, and **
 - Collect and display **user feedback**
 
 ## How to Use
-1. Open the site: [Live Demo]
+1. Open the site: [Live Demo] https://lokeshwaran-jpg.github.io/AI-Password-Advisor-/
 2. Click **Start AI Password Advisor**
 3. Choose **Create Password** or **Check Password**
 4. Use the **Hacker Simulator** to test password strength
