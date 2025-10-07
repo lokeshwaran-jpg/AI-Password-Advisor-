@@ -1,195 +1,306 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>First project </title>
-    
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-<meta charset="utf-8" />
+  <meta charset="utf-8" />
 
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-<title>AI Password Advisor</title>
+  <title>AI Password Advisor</title>
 
-<style>
+  <style>
 
-  /* --- Visuals --- */
+    /* --- Visuals --- */
 
-  :root{
+    :root {
 
-    --bg:#0a0a23;
+      --bg: #0a0a23;
 
-    --card: rgba(255,255,255,0.05);
+      --card: rgba(255,255,255,0.05);
 
-    --muted: #cbd5e1;
+      --muted: #cbd5e1;
 
-    --accent1: #007bff;
+      --accent1: #007bff;
 
-    --accent2: #00c6ff;
+      --accent2: #00c6ff;
 
-  }
+    }
 
-  body{
+    body {
 
-    margin:0;
+      margin: 0;
 
-    font-family: "Segoe UI", Arial, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
 
-    background: var(--bg);
+      background: var(--bg);
 
-    color:#fff;
+      color: #fff;
 
-    -webkit-font-smoothing:antialiased;
+      -webkit-font-smoothing: antialiased;
 
-  }
+      display: flex;
 
-  header{
+      flex-direction: column;
 
-    text-align:center;
+      min-height: 100vh;
 
-    padding:20px;
+    }
 
-    background: linear-gradient(90deg,var(--accent1),var(--accent2));
+    header {
 
-  }
+      text-align: center;
 
-  header .title{
+      padding: 20px;
 
-    display:inline-flex;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
 
-    align-items:center;
+    }
 
-    gap:12px;
+    header .title {
 
-  }
+      display: inline-flex;
 
-  header img{ width:56px; height:56px; object-fit:contain; }
+      align-items: center;
 
-  header h1{ margin:0; font-size:28px; }
+      gap: 12px;
 
-  .subtitle{ margin:6px 0 0; opacity:.95; font-size:14px; }
+    }
 
-  .container{ max-width:980px; margin:18px auto; padding:0 16px; }
+    header img {
 
-  section{
+      width: 56px;
 
-    background: var(--card);
+      height: 56px;
 
-    padding:18px;
+      object-fit: contain;
 
-    border-radius:12px;
+    }
 
-    margin-bottom:14px;
+    header h1 {
 
-  }
+      margin: 0;
 
-  section h2{ color:#ffdd57; margin:0 0 10px 0; }
+      font-size: 28px;
 
-  section p, section li{ color:var(--muted); font-size:15px; line-height:1.5; }
+    }
 
-  .controls { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .subtitle {
 
-  button{
+      margin: 6px 0 0;
 
-    cursor:pointer;
+      opacity: .95;
 
-    border:0;
+      font-size: 14px;
 
-    border-radius:8px;
+    }
 
-    padding:9px 12px;
+    .container {
 
-    font-size:14px;
+      max-width: 980px;
 
-  }
+      margin: 18px auto;
 
-  .start-btn{ background:#28a745; color:white; }
+      padding: 0 16px;
 
-  .create-btn{ background:#17a2b8; color:white; }
+      flex: 1;
 
-  .check-btn{ background:#ffc107; color:#000; }
+    }
 
-  .show-btn{ background:#6c757d; color:white; }
+    section {
 
-  .copy-btn{ background:#007bff; color:white; }
+      background: var(--card);
 
-  .paste-btn{ background:#6610f2; color:white; }
+      padding: 18px;
 
-  .sim-btn{ background:#dc3545; color:white; }
+      border-radius: 12px;
 
-  .submit-btn{ background:#20c997; color:white; }
+      margin-bottom: 14px;
 
-  .read-btn{ background:#ff6f61; color:white; }
+    }
 
-  input, textarea, select{
+    section h2 {
 
-    width:100%;
+      color: #ffdd57;
 
-    max-width:420px;
+      margin: 0 0 10px 0;
 
-    padding:10px;
+    }
 
-    border-radius:8px;
+    section p, section li {
 
-    border:1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
 
-    background:transparent;
+      font-size: 15px;
 
-    color:#fff;
+      line-height: 1.5;
 
-    margin:6px 0;
+    }
 
-    box-sizing:border-box;
+    .controls {
 
-  }
+      display: flex;
 
-  textarea{ min-height:80px; resize:vertical; }
+      gap: 8px;
 
-  .row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+      flex-wrap: wrap;
 
-  .feedback{ color:#fff; margin-top:8px; font-size:14px; }
+      margin-top: 8px;
 
-  .terminal{
+    }
 
-    background:#000;
+    button {
 
-    color:#0f0;
+      cursor: pointer;
 
-    font-family:monospace;
+      border: 0;
 
-    padding:12px;
+      border-radius: 8px;
 
-    border-radius:8px;
+      padding: 9px 12px;
 
-    height:220px;
+      font-size: 14px;
 
-    overflow:auto;
+    }
 
-    margin-top:10px;
+    .start-btn { background: #28a745; color: white; }
 
-  }
+    .create-btn { background: #17a2b8; color: white; }
 
-  #feedbackList{ margin-top:10px; max-height:200px; overflow:auto; background: rgba(255,255,255,0.03); padding:10px; border-radius:8px; }
+    .check-btn { background: #ffc107; color: #000; }
 
-  @media(max-width:640px){
+    .show-btn { background: #6c757d; color: white; }
 
-    header h1{ font-size:20px; }
+    .copy-btn { background: #007bff; color: white; }
 
-    .controls{ justify-content:flex-start; }
+    .paste-btn { background: #6610f2; color: white; }
 
-  }
+    .sim-btn { background: #dc3545; color: white; }
 
-</style>
+    .submit-btn { background: #20c997; color: white; }
+
+    .read-btn { background: #ff6f61; color: white; }
+
+    input, textarea, select {
+
+      width: 100%;
+
+      max-width: 420px;
+
+      padding: 10px;
+
+      border-radius: 8px;
+
+      border: 1px solid rgba(255,255,255,0.08);
+
+      background: transparent;
+
+      color: #fff;
+
+      margin: 6px 0;
+
+      box-sizing: border-box;
+
+    }
+
+    textarea {
+
+      min-height: 80px;
+
+      resize: vertical;
+
+    }
+
+    .row {
+
+      display: flex;
+
+      gap: 8px;
+
+      flex-wrap: wrap;
+
+      align-items: center;
+
+    }
+
+    .feedback {
+
+      color: #fff;
+
+      margin-top: 8px;
+
+      font-size: 14px;
+
+    }
+
+    .terminal {
+
+      background: #000;
+
+      color: #0f0;
+
+      font-family: monospace;
+
+      padding: 12px;
+
+      border-radius: 8px;
+
+      height: 220px;
+
+      overflow: auto;
+
+      margin-top: 10px;
+
+    }
+
+    #feedbackList {
+
+      margin-top: 10px;
+
+      max-height: 200px;
+
+      overflow: auto;
+
+      background: rgba(255,255,255,0.03);
+
+      padding: 10px;
+
+      border-radius: 8px;
+
+    }
+
+    footer {
+
+      text-align: center;
+
+      padding: 12px 0;
+
+      background: rgba(255,255,255,0.03);
+
+      font-size: 14px;
+
+      color: var(--muted);
+
+    }
+
+    footer a {
+
+      color: var(--accent1);
+
+      text-decoration: none;
+
+    }
+
+    @media (max-width: 640px) {
+
+      header h1 { font-size: 20px; }
+
+      .controls { justify-content: flex-start; }
+
+    }
+
+  </style>
 
 </head>
 
@@ -235,7 +346,7 @@
 
       <h2>Cybercrime snapshot</h2>
 
-      <div id="cyberGraph"></div>
+      <div id="cyberGraph">[Graph placeholder — replace with real chart]</div>
 
       <ul>
 
@@ -381,454 +492,524 @@
 
   </div>
 
-<script>
+  <footer>
 
-document.addEventListener('DOMContentLoaded', () => {
+    Follow me on LinkedIn: <a href="https://www.linkedin.com/in/s-lokeshwaran-cybersecurity" target="_blank">S. Lokeshwaran (Cybersecurity)</a>
 
-  // --- Element refs ---
+  </footer>
 
-  const startBtn = document.getElementById('startBtn');
+  <script>
 
-  const advisorSection = document.getElementById('advisorSection');
+    document.addEventListener('DOMContentLoaded', () => {
 
-  const optCreate = document.getElementById('optCreate');
+      // --- Element refs ---
 
-  const optCheck = document.getElementById('optCheck');
+      const startBtn = document.getElementById('startBtn');
 
-  const createSection = document.getElementById('createSection');
+      const advisorSection = document.getElementById('advisorSection');
 
-  const checkSection = document.getElementById('checkSection');
+      const optCreate = document.getElementById('optCreate');
 
-  const createRandom = document.getElementById('createRandom');
+      const optCheck = document.getElementById('optCheck');
 
-  const createPersonal = document.getElementById('createPersonal');
+      const createSection = document.getElementById('createSection');
 
-  const personalInput = document.getElementById('personalInput');
+      const checkSection = document.getElementById('checkSection');
 
-  const generatePersonal = document.getElementById('generatePersonal');
+      const createRandom = document.getElementById('createRandom');
 
-  const generatedPassword = document.getElementById('generatedPassword');
+      const createPersonal = document.getElementById('createPersonal');
 
-  const generatedFeedback = document.getElementById('generatedFeedback');
+      const personalInput = document.getElementById('personalInput');
 
-  const toggleGenerated = document.getElementById('toggleGenerated');
+      const generatePersonal = document.getElementById('generatePersonal');
 
-  const copyGenerated = document.getElementById('copyGenerated');
+      const generatedPassword = document.getElementById('generatedPassword');
 
-  const passwordInput = document.getElementById('passwordInput');
+      const generatedFeedback = document.getElementById('generatedFeedback');
 
-  const toggleBtn = document.getElementById('toggleBtn');
+      const toggleGenerated = document.getElementById('toggleGenerated');
 
-  const copyBtn = document.getElementById('copyBtn');
+      const copyGenerated = document.getElementById('copyGenerated');
 
-  const pasteBtn = document.getElementById('pasteBtn');
+      const passwordInput = document.getElementById('passwordInput');
 
-  const feedback = document.getElementById('feedback');
+      const toggleBtn = document.getElementById('toggleBtn');
 
-  const simulateBtn = document.getElementById('simulateBtn');
+      const copyBtn = document.getElementById('copyBtn');
 
-  const terminal = document.getElementById('terminal');
+      const pasteBtn = document.getElementById('pasteBtn');
 
-  const submitReview = document.getElementById('submitReview');
+      const feedback = document.getElementById('feedback');
 
-  const readFeedback = document.getElementById('readFeedback');
+      const simulateBtn = document.getElementById('simulateBtn');
 
-  const reviewText = document.getElementById('reviewText');
+      const terminal = document.getElementById('terminal');
 
-  const reviewName = document.getElementById('reviewName');
+      const submitReview = document.getElementById('submitReview');
 
-  const feedbackList = document.getElementById('feedbackList');
+      const readFeedback = document.getElementById('readFeedback');
 
-  // stored in-memory feedback list
+      const reviewText = document.getElementById('reviewText');
 
-  const reviews = [];
+      const reviewName = document.getElementById('reviewName');
 
-  // --- Start advisor ---
+      const feedbackList = document.getElementById('feedbackList');
 
-  startBtn.addEventListener('click', () => {
+      // --- Load reviews from localStorage ---
 
-    advisorSection.style.display = 'block';
+      let reviews = [];
 
-    startBtn.disabled = true;
+      const STORAGE_KEY = 'aiPasswordAdvisorReviews';
 
-    startBtn.textContent = 'Advisor Started';
+      function loadReviews() {
 
-  });
+        const raw = localStorage.getItem(STORAGE_KEY);
 
-  // --- Switch sections ---
+        if (raw) {
 
-  optCreate.addEventListener('click', () => {
+          try {
 
-    createSection.style.display = 'block';
+            const arr = JSON.parse(raw);
 
-    checkSection.style.display = 'none';
+            if (Array.isArray(arr)) {
 
-  });
+              reviews = arr;
 
-  optCheck.addEventListener('click', () => {
+            }
 
-    checkSection.style.display = 'block';
+          } catch (e) {
 
-    createSection.style.display = 'none';
+            console.error('Failed to parse saved reviews:', e);
 
-  });
+          }
 
-  // --- Random password generation ---
+        }
 
-  createRandom.addEventListener('click', () => {
+      }
 
-    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=';
+      function saveReviews() {
 
-    let pass = '';
+        try {
 
-    for (let i=0;i<14;i++) pass += charset[Math.floor(Math.random()*charset.length)];
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
 
-    generatedPassword.value = pass;
+        } catch (e) {
 
-    autoFeedback(pass, generatedFeedback);
+          console.error('Failed to save reviews:', e);
 
-  });
+        }
 
-  // --- Personal generation (simple patterned approach) ---
+      }
 
-  createPersonal.addEventListener('click', () => {
+      function renderFeedbackList(openAfter = false) {
 
-    personalInput.style.display = 'block';
+        feedbackList.innerHTML = '';
 
-  });
+        if (reviews.length === 0) {
 
-  generatePersonal.addEventListener('click', () => {
+          feedbackList.innerHTML = '<div style="color:#ddd">No feedback yet.</div>';
 
-    const n = (document.getElementById('name').value||'').trim();
+        } else {
 
-    const y = (document.getElementById('year').value||'').trim();
+          // show latest first
 
-    const p = (document.getElementById('pet').value||'').trim();
+          reviews.slice().reverse().forEach(r => {
 
-    const place = (document.getElementById('place').value||'').trim();
+            const entry = document.createElement('div');
 
-    const age = (document.getElementById('age').value||'').trim();
+            entry.style.padding = '8px';
 
-    // build a memorable-but-not-obvious string: mix parts, change case, add symbols
+            entry.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
 
-    const partA = (n ? n[0].toUpperCase() + n.slice(1).toLowerCase() : 'User');
+            // escape HTML
 
-    const partB = (p ? p[0].toLowerCase() + p.slice(1) : 'Pet');
+            function esc(s) {
 
-    const yearFragment = y ? y.slice(-2) : Math.floor(Math.random()*90 + 10).toString();
+              return ('' + s).replace(/[&<>"']/g, c => ({
 
-    const extra = '!#' + (age || '99');
+                '&': '&amp;',
 
-    const pass = `${partA}.${partB}${yearFragment}${extra}`;
+                '<': '&lt;',
 
-    generatedPassword.value = pass;
+                '>': '&gt;',
 
-    autoFeedback(pass, generatedFeedback);
+                '"': '&quot;',
 
-  });
+                "'": '&#39;'
 
-  // --- Toggle show for generated and check inputs ---
+              }[c]));
 
-  toggleGenerated.addEventListener('click', () => {
+            }
 
-    generatedPassword.type = generatedPassword.type === 'password' ? 'text' : 'password';
+            entry.innerHTML =
 
-  });
+              `<strong style="color:#fff">${esc(r.name)}</strong> — ` +
 
-  toggleBtn.addEventListener('click', () => {
+              `<span style="color:#9ec5ff;font-size:12px">${new Date(r.time).toLocaleString()}</span>` +
 
-    passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+              `<div style="color:#ddd;margin-top:6px">${esc(r.text)}</div>`;
 
-  });
+            feedbackList.appendChild(entry);
 
-  // --- Copy / Paste ---
+          });
 
-  copyGenerated.addEventListener('click', async () => {
+        }
 
-    try { await navigator.clipboard.writeText(generatedPassword.value || ''); alert('Copied generated password'); }
+        if (openAfter) {
 
-    catch(e){ alert('Copy failed'); }
+          feedbackList.scrollIntoView({ behavior: 'smooth' });
 
-  });
+        }
 
-  copyBtn.addEventListener('click', async () => {
+      }
 
-    try { await navigator.clipboard.writeText(passwordInput.value || ''); alert('Copied password'); }
+      // Initially load & render
 
-    catch(e){ alert('Copy failed'); }
+      loadReviews();
 
-  });
+      renderFeedbackList();
 
-  pasteBtn.addEventListener('click', async () => {
+      // --- Start advisor ---
 
-    try {
+      startBtn.addEventListener('click', () => {
 
-      const txt = await navigator.clipboard.readText();
+        advisorSection.style.display = 'block';
 
-      passwordInput.value = txt;
+        startBtn.disabled = true;
 
-      updateFeedback(txt, feedback);
-
-    } catch(e){
-
-      alert('Paste failed or permission denied');
-
-    }
-
-  });
-
-  // --- Live check feedback for password input ---
-
-  passwordInput.addEventListener('input', () => updateFeedback(passwordInput.value, feedback));
-
-  // helper to show feedback for generated password
-
-  function autoFeedback(pw, el){
-
-    el.style.display = 'block';
-
-    updateFeedback(pw, el);
-
-  }
-
-  // --- Hacker simulator ---
-
-  simulateBtn.addEventListener('click', async () => {
-
-    terminal.innerHTML = '';
-
-    const pw = generatedPassword.value || passwordInput.value || '';
-
-    if(!pw){
-
-      alert('Enter or generate a password first.');
-
-      return;
-
-    }
-
-    const strength = calculateScore(pw); // 0-100
-
-    const commands = [
-
-      'nmap -sV 192.168.1.10',
-
-      'hydra -L users.txt -P passwords.txt ssh://target',
-
-      'john --wordlist=passwords.txt --format=raw-md5 target_hash',
-
-      'medusa -h 192.168.1.10 -U users.txt -P passwords.txt'
-
-    ];
-
-    // Simulate terminal typing of commands
-
-    for (let i=0;i<commands.length;i++){
-
-      terminal.innerHTML += `$ ${commands[i]}<br>`;
-
-      terminal.scrollTop = terminal.scrollHeight;
-
-      // pause: weaker = faster success simulation; we always run full sequence for realism
-
-      // user requested earlier: strength <50 => ACCESS GRANTED
-
-      await new Promise(r => setTimeout(r, 1800));
-
-    }
-
-    // Final result based on strength threshold <50
-
-    if (strength < 50){
-
-      terminal.innerHTML += `<br><span style="color:red;font-weight:bold;">ACCESS GRANTED — Password Hacked!</span><br>`;
-
-      alert('Weak password detected. ACCESS GRANTED in simulation.');
-
-    } else {
-
-      terminal.innerHTML += `<br><span style="color:limegreen;font-weight:bold;">ACCESS DENIED — Password Protected by Lokesh AI Advisor</span><br>`;
-
-    }
-
-    terminal.scrollTop = terminal.scrollHeight;
-
-  });
-
-  // --- Reviews: store & display ---
-
-  submitReview.addEventListener('click', () => {
-
-    const name = (reviewName.value || '').trim() || 'Anonymous';
-
-    const text = (reviewText.value || '').trim();
-
-    if (!text){
-
-      alert('Please write your feedback before submitting.');
-
-      return;
-
-    }
-
-    reviews.push({name, text, time: new Date().toISOString()});
-
-    reviewText.value = '';
-
-    reviewName.value = '';
-
-    alert('Thank you — your review was saved locally in this session.');
-
-    renderFeedbackList();
-
-  });
-
-  readFeedback.addEventListener('click', () => {
-
-    renderFeedbackList(true);
-
-  });
-
-  function renderFeedbackList(openAfter=false){
-
-    feedbackList.innerHTML = '';
-
-    if (reviews.length === 0){
-
-      feedbackList.innerHTML = '<div style="color:#ddd">No feedback yet.</div>';
-
-    } else {
-
-      reviews.slice().reverse().forEach(r => {
-
-        const entry = document.createElement('div');
-
-        entry.style.padding = '8px';
-
-        entry.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
-
-        entry.innerHTML = `<strong style="color:#fff">${escapeHtml(r.name)}</strong> — <span style="color:#9ec5ff;font-size:12px">${new Date(r.time).toLocaleString()}</span><div style="color:#ddd;margin-top:6px">${escapeHtml(r.text)}</div>`;
-
-        feedbackList.appendChild(entry);
+        startBtn.textContent = 'Advisor Started';
 
       });
 
-    }
+      // --- Section switching ---
 
-    if (openAfter) feedbackList.scrollIntoView({behavior:'smooth'});
+      optCreate.addEventListener('click', () => {
 
-  }
+        createSection.style.display = 'block';
 
-  // --- Utilities / scoring / hints ---
+        checkSection.style.display = 'none';
 
-  function updateFeedback(pw, el){
+      });
 
-    const score = calculateScore(pw);
+      optCheck.addEventListener('click', () => {
 
-    const label = score < 40 ? 'Weak' : score < 70 ? 'Medium' : score < 90 ? 'Strong' : 'Very Strong';
+        checkSection.style.display = 'block';
 
-    const entropyEst = estimateEntropyBits(pw);
+        createSection.style.display = 'none';
 
-    const suggestions = [];
+      });
 
-    if (pw.length < 12) suggestions.push('Use at least 12 characters');
+      // --- Random password generation ---
 
-    if (!(/[A-Z]/.test(pw))) suggestions.push('Add uppercase letters');
+      createRandom.addEventListener('click', () => {
 
-    if (!(/[a-z]/.test(pw))) suggestions.push('Add lowercase letters');
+        const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=';
 
-    if (!(/\d/.test(pw))) suggestions.push('Add digits');
+        let pass = '';
 
-    if (!(/[^A-Za-z0-9]/.test(pw))) suggestions.push('Add special characters (!@#$...)');
+        for (let i = 0; i < 14; i++) {
 
-    // avoid showing raw personal info detection in this simple version.
+          pass += charset[Math.floor(Math.random() * charset.length)];
 
-    el.innerHTML = `
+        }
 
-      Strength: <strong>${label}</strong> (${score}%)
+        generatedPassword.value = pass;
 
-      <br>Estimated entropy: ${entropyEst} bits
+        autoFeedback(pass, generatedFeedback);
 
-      <br>${suggestions.length ? 'Suggestions: ' + suggestions.join(', ') : 'Good job — looks diverse.'}
+      });
 
-    `;
+      // --- Personal generation ---
 
-  }
+      createPersonal.addEventListener('click', () => {
 
-  function calculateScore(pw){
+        personalInput.style.display = 'block';
 
-    if(!pw) return 0;
+      });
 
-    let score = 0;
+      generatePersonal.addEventListener('click', () => {
 
-    if (pw.length >= 16) score += 35;
+        const n = (document.getElementById('name').value || '').trim();
 
-    else if (pw.length >= 12) score += 20;
+        const y = (document.getElementById('year').value || '').trim();
 
-    else if (pw.length >= 8) score += 10;
+        const p = (document.getElementById('pet').value || '').trim();
 
-    if (/[A-Z]/.test(pw)) score += 20;
+        const place = (document.getElementById('place').value || '').trim();
 
-    if (/[a-z]/.test(pw)) score += 15;
+        const age = (document.getElementById('age').value || '').trim();
 
-    if (/\d/.test(pw)) score += 15;
+        const partA = (n ? n[0].toUpperCase() + n.slice(1).toLowerCase() : 'User');
 
-    if (/[^A-Za-z0-9]/.test(pw)) score += 15;
+        const partB = (p ? p[0].toLowerCase() + p.slice(1) : 'Pet');
 
-    return Math.min(100, score);
+        const yearFragment = y ? y.slice(-2) : Math.floor(Math.random() * 90 + 10).toString();
 
-  }
+        const extra = '!#' + (age || '99');
 
-  function estimateEntropyBits(s){
+        const pass = `${partA}.${partB}${yearFragment}${extra}`;
 
-    if(!s) return 0;
+        generatedPassword.value = pass;
 
-    // simple Shannon-based per-character estimate
+        autoFeedback(pass, generatedFeedback);
 
-    const freq = {};
+      });
 
-    for (const ch of s) freq[ch] = (freq[ch] || 0) + 1;
+      // --- Toggle show/hide for generated & check inputs ---
 
-    let H = 0;
+      toggleGenerated.addEventListener('click', () => {
 
-    const L = s.length;
+        generatedPassword.type = generatedPassword.type === 'password' ? 'text' : 'password';
 
-    for (const k in freq){
+      });
 
-      const p = freq[k]/L;
+      toggleBtn.addEventListener('click', () => {
 
-      H -= p * Math.log2(p);
+        passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
 
-    }
+      });
 
-    return Math.round(H * L * 100)/100;
+      // --- Copy / Paste ---
 
-  }
+      copyGenerated.addEventListener('click', async () => {
 
-  // basic HTML esc for user content
+        try {
 
-  function escapeHtml(str){
+          await navigator.clipboard.writeText(generatedPassword.value || '');
 
-    return (str+'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+          alert('Copied generated password');
 
-  }
+        } catch (e) {
 
-  // -- ensure generated password input uses type text (readonly) for easy copy --
+          alert('Copy failed');
 
-  generatedPassword.setAttribute('type','text');
+        }
 
-  // initial small guidance
+      });
 
-  document.getElementById('about').querySelector('p').insertAdjacentHTML('beforeend',' <em style="color:#9ec5ff"> (This is a demo — do not paste real high-value passwords here.)</em>');
+      copyBtn.addEventListener('click', async () => {
 
-});
+        try {
 
-</script>
+          await navigator.clipboard.writeText(passwordInput.value || '');
+
+          alert('Copied password');
+
+        } catch (e) {
+
+          alert('Copy failed');
+
+        }
+
+      });
+
+      pasteBtn.addEventListener('click', async () => {
+
+        try {
+
+          const txt = await navigator.clipboard.readText();
+
+          passwordInput.value = txt;
+
+          updateFeedback(txt, feedback);
+
+        } catch (e) {
+
+          alert('Paste failed or permission denied');
+
+        }
+
+      });
+
+      // --- Live check feedback ---
+
+      passwordInput.addEventListener('input', () => updateFeedback(passwordInput.value, feedback));
+
+      // --- Hacker simulator ---
+
+      simulateBtn.addEventListener('click', async () => {
+
+        terminal.innerHTML = '';
+
+        const pw = generatedPassword.value || passwordInput.value || '';
+
+        if (!pw) {
+
+          alert('Enter or generate a password first.');
+
+          return;
+
+        }
+
+        const strength = calculateScore(pw); // 0–100
+
+        const commands = [
+
+          'nmap -sV 192.168.1.10',
+
+          'hydra -L users.txt -P passwords.txt ssh://target',
+
+          'john --wordlist=passwords.txt --format=raw-md5 target_hash',
+
+          'medusa -h 192.168.1.10 -U users.txt -P passwords.txt'
+
+        ];
+
+        for (let i = 0; i < commands.length; i++) {
+
+          terminal.innerHTML += `$ ${commands[i]}<br>`;
+
+          terminal.scrollTop = terminal.scrollHeight;
+
+          await new Promise(r => setTimeout(r, 1800));
+
+        }
+
+        if (strength < 50) {
+
+          terminal.innerHTML += `<br><span style="color:red;font-weight:bold;">ACCESS GRANTED — Password Hacked!</span><br>`;
+
+          alert('Weak password detected. ACCESS GRANTED in simulation.');
+
+        } else {
+
+          terminal.innerHTML += `<br><span style="color:limegreen;font-weight:bold;">ACCESS DENIED — Password Protected by Lokesh AI Advisor</span><br>`;
+
+        }
+
+        terminal.scrollTop = terminal.scrollHeight;
+
+      });
+
+      // --- Reviews: store & display ---
+
+      submitReview.addEventListener('click', () => {
+
+        const name = (reviewName.value || '').trim() || 'Anonymous';
+
+        const text = (reviewText.value || '').trim();
+
+        if (!text) {
+
+          alert('Please write your feedback before submitting.');
+
+          return;
+
+        }
+
+        const rec = {
+
+          name,
+
+          text,
+
+          time: new Date().toISOString()
+
+        };
+
+        reviews.push(rec);
+
+        saveReviews();
+
+        reviewText.value = '';
+
+        reviewName.value = '';
+
+        alert('Thank you — your review was saved.');
+
+        renderFeedbackList();
+
+      });
+
+      readFeedback.addEventListener('click', () => {
+
+        renderFeedbackList(true);
+
+      });
+
+      function updateFeedback(pw, el) {
+
+        const score = calculateScore(pw);
+
+        const label = score < 40 ? 'Weak' : score < 70 ? 'Medium' : score < 90 ? 'Strong' : 'Very Strong';
+
+        const entropyEst = estimateEntropyBits(pw);
+
+        const suggestions = [];
+
+        if (pw.length < 12) suggestions.push('Use at least 12 characters');
+
+        if (!(/[A-Z]/.test(pw))) suggestions.push('Add uppercase letters');
+
+        if (!(/[a-z]/.test(pw))) suggestions.push('Add lowercase letters');
+
+        if (!(/\d/.test(pw))) suggestions.push('Add digits');
+
+        if (!(/[^A-Za-z0-9]/.test(pw))) suggestions.push('Add special characters (!@#$...)');
+
+        el.innerHTML =
+
+          `Strength: <strong>${label}</strong> (${score}%)<br>` +
+
+          `Estimated entropy: ${entropyEst} bits<br>` +
+
+          (suggestions.length ? 'Suggestions: ' + suggestions.join(', ') : 'Good job — looks diverse.');
+
+      }
+
+      function calculateScore(pw) {
+
+        if (!pw) return 0;
+
+        let score = 0;
+
+        if (pw.length >= 16) score += 35;
+
+        else if (pw.length >= 12) score += 20;
+
+        else if (pw.length >= 8) score += 10;
+
+        if (/[A-Z]/.test(pw)) score += 20;
+
+        if (/[a-z]/.test(pw)) score += 15;
+
+        if (/\d/.test(pw)) score += 15;
+
+        if (/[^A-Za-z0-9]/.test(pw)) score += 15;
+
+        return Math.min(100, score);
+
+      }
+
+      function estimateEntropyBits(s) {
+
+        if (!s) return 0;
+
+        const freq = {};
+
+        for (const ch of s) freq[ch] = (freq[ch] || 0) + 1;
+
+        let H = 0;
+
+        const L = s.length;
+
+        for (const k in freq) {
+
+          const p = freq[k] / L;
+
+          H -= p * Math.log2(p);
+
+        }
+
+        return Math.round(H * L * 100) / 100;
+
+      }
+
+    });
+
+  </script>
 
 </body>
 
-</html>
-    
-  </body>
-  
 </html>
