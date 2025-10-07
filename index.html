@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>AI Password Advisor</title>
+
+  <style>
+
+    /* --- Visuals --- */
+
+    :root {
+
+      --bg: #0a0a23;
+
+      --card: rgba(255,255,255,0.05);
+
+      --muted: #cbd5e1;
+
+      --accent1: #007bff;
+
+      --accent2: #00c6ff;
+
+    }
+
+    body {
+
+      margin: 0;
+
+      font-family: "Segoe UI", Arial, sans-serif;
+
+      background: var(--bg);
+
+      color: #fff;
+
+      -webkit-font-smoothing: antialiased;
+
+      display: flex;
+
+      flex-direction: column;
+
+      min-height: 100vh;
+
+    }
+
+    header {
+
+      text-align: center;
+
+      padding: 20px;
+
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+
+    }
+
+    header .title {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+    }
+
+    header img {
+
+      width: 56px;
+
+      height: 56px;
+
+      object-fit: contain;
+
+    }
+
+    header h1 {
+
+      margin: 0;
+
+      font-size: 28px;
+
+    }
+
+    .subtitle {
+
+      margin: 6px 0 0;
+
+      opacity: .95;
+
+      font-size: 14px;
+
+    }
+
+    .container {
+
+      max-width: 980px;
+
+      margin: 18px auto;
+
+      padding: 0 16px;
+
+      flex: 1;
+
+    }
+
+    section {
+
+      background: var(--card);
+
+      padding: 18px;
+
+      border-radius: 12px;
+
+      margin-bottom: 14px;
+
+    }
+
+    section h2 {
+
+      color: #ffdd57;
+
+      margin: 0 0 10px 0;
+
+    }
+
+    section p, section li {
+
+      color: var(--muted);
+
+      font-size: 15px;
+
+      line-height: 1.5;
+
+    }
+
+    .controls {
+
+      display: flex;
+
+      gap: 8px;
+
+      flex-wrap: wrap;
+
+      margin-top: 8px;
+
+    }
+
+    button {
+
+      cursor: pointer;
+
+      border: 0;
+
+      border-radius: 8px;
+
+      padding: 9px 12px;
+
+      font-size: 14px;
+
+    }
+
+    .start-btn { background: #28a745; color: white; }
+
+    .create-btn { background: #17a2b8; color: white; }
+
+    .check-btn { background: #ffc107; color: #000; }
+
+    .show-btn { background: #6c757d; color: white; }
+
+    .copy-btn { background: #007bff; color: white; }
+
+    .paste-btn { background: #6610f2; color: white; }
+
+    .sim-btn { background: #dc3545; color: white; }
+
+    .submit-btn { background: #20c997; color: white; }
+
+    .read-btn { background: #ff6f61; color: white; }
+
+    input, textarea, select {
+
+      width: 100%;
+
+      max-width: 420px;
+
+      padding: 10px;
+
+      border-radius: 8px;
+
+      border: 1px solid rgba(255,255,255,0.08);
+
+      background: transparent;
+
+      color: #fff;
+
+      margin: 6px 0;
+
+      box-sizing: border-box;
+
+    }
+
+    textarea {
+
+      min-height: 80px;
+
+      resize: vertical;
+
+    }
+
+    .row {
+
+      display: flex;
+
+      gap: 8px;
+
+      flex-wrap: wrap;
+
+      align-items: center;
+
+    }
+
+    .feedback {
+
+      color: #fff;
+
+      margin-top: 8px;
+
+      font-size: 14px;
+
+    }
+
+    .terminal {
+
+      background: #000;
+
+      color: #0f0;
+
+      font-family: monospace;
+
+      padding: 12px;
+
+      border-radius: 8px;
+
+      height: 220px;
+
+      overflow: auto;
+
+      margin-top: 10px;
+
+    }
+
+    #feedbackList {
+
+      margin-top: 10px;
+
+      max-height: 200px;
+
+      overflow: auto;
+
+      background: rgba(255,255,255,0.03);
+
+      padding: 10px;
+
+      border-radius: 8px;
+
+    }
+
+    footer {
+
+      text-align: center;
+
+      padding: 12px 0;
+
+      background: rgba(255,255,255,0.03);
+
+      font-size: 14px;
+
+      color: var(--muted);
+
+    }
+
+    footer a {
+
+      color: var(--accent1);
+
+      text-decoration: none;
+
+    }
+
+    @media (max-width: 640px) {
+
+      header h1 { font-size: 20px; }
+
+      .controls { justify-content: flex-start; }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <header>
+
+    <div class="title">
+
+      <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=80" alt="logo">
+
+      <div>
+
+        <h1>AI Password Advisor</h1>
+
+        <div class="subtitle">Designed by Lokeshwaran — Cybersecurity Analyst</div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <div class="container">
+
+    <section id="about">
+
+      <h2>About</h2>
+
+      <p>This tool helps you create memorable but strong passwords, checks password strength, and demonstrates (safely) how an attacker might attempt to break weak passwords.</p>
+
+    </section>
+
+    <section id="history">
+
+      <h2>Why strong passwords matter</h2>
+
+      <p>Passwords remain a primary control for protecting accounts. Weak or reused passwords are a top cause of breaches — a strong unique password per account is essential.</p>
+
+    </section>
+
+    <section id="cybercrime">
+
+      <h2>Cybercrime snapshot</h2>
+
+      <div id="cyberGraph">[Graph placeholder — replace with real chart]</div>
+
+      <ul>
+
+        <li>Weak/reused passwords are commonly exploited in account takeover attacks.</li>
+
+        <li>Use a unique, long password or a passphrase for important accounts.</li>
+
+      </ul>
+
+    </section>
+
+    <section id="startSection">
+
+      <h2>Get started</h2>
+
+      <div class="controls">
+
+        <button id="startBtn" class="start-btn">Start AI Password Advisor</button>
+
+      </div>
+
+    </section>
+
+    <section id="advisorSection" style="display:none;">
+
+      <h2>AI Password Advisor</h2>
+
+      <div class="controls">
+
+        <button id="optCreate" class="create-btn">Create Password</button>
+
+        <button id="optCheck" class="check-btn">Check Password</button>
+
+      </div>
+
+      <!-- CREATE -->
+
+      <div id="createSection" style="display:none; margin-top:12px;">
+
+        <p><strong>Create password</strong> — choose random or personal-based generation (personal uses your hints to make memorable passwords; avoid using direct personal info in final password).</p>
+
+        <div class="controls">
+
+          <button id="createRandom" class="create-btn">Random</button>
+
+          <button id="createPersonal" class="create-btn">Personal</button>
+
+        </div>
+
+        <div id="personalInput" style="display:none; margin-top:10px;">
+
+          <input id="name" placeholder="Your name (hint, optional)" />
+
+          <input id="age" type="number" placeholder="Age (optional)" />
+
+          <input id="year" placeholder="Birth year (optional)" />
+
+          <input id="pet" placeholder="Pet name (optional)" />
+
+          <input id="place" placeholder="Favorite place (optional)" />
+
+          <div style="margin-top:8px;">
+
+            <button id="generatePersonal" class="create-btn">Generate Personal Password</button>
+
+          </div>
+
+        </div>
+
+        <div style="margin-top:12px;">
+
+          <input id="generatedPassword" readonly placeholder="Generated password appears here" />
+
+          <div id="generatedFeedback" class="feedback"></div>
+
+          <div class="row" style="margin-top:8px;">
+
+            <button id="toggleGenerated" class="show-btn">Show</button>
+
+            <button id="copyGenerated" class="copy-btn">Copy</button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CHECK -->
+
+      <div id="checkSection" style="display:none; margin-top:12px;">
+
+        <p><strong>Check password</strong> — paste or type a password to see strength and hints.</p>
+
+        <input id="passwordInput" type="password" placeholder="Enter password to check" />
+
+        <div class="row">
+
+          <button id="toggleBtn" class="show-btn">Show</button>
+
+          <button id="copyBtn" class="copy-btn">Copy</button>
+
+          <button id="pasteBtn" class="paste-btn">Paste</button>
+
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+
+      </div>
+
+      <!-- HACKER SIM -->
+
+      <div style="margin-top:12px;">
+
+        <button id="simulateBtn" class="sim-btn">Start Hacker Simulator</button>
+
+        <div id="terminal" class="terminal" aria-live="polite"></div>
+
+      </div>
+
+    </section>
+
+    <!-- Reviews (visible to all users) -->
+
+    <section id="reviewSection">
+
+      <h2>User feedback</h2>
+
+      <input id="reviewName" placeholder="Your name (optional)" />
+
+      <textarea id="reviewText" placeholder="Write your feedback..."></textarea>
+
+      <div class="row">
+
+        <button id="submitReview" class="submit-btn">Submit Review</button>
+
+        <button id="readFeedback" class="read-btn">Read Feedback</button>
+
+      </div>
+
+      <div id="feedbackList"></div>
+
+    </section>
+
+  </div>
+
+  <footer>
+
+    Follow me on LinkedIn: <a href="https://www.linkedin.com/in/s-lokeshwaran-cybersecurity" target="_blank">S. Lokeshwaran (Cybersecurity)</a>
+
+  </footer>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // --- Element refs ---
+
+      const startBtn = document.getElementById('startBtn');
+
+      const advisorSection = document.getElementById('advisorSection');
+
+      const optCreate = document.getElementById('optCreate');
+
+      const optCheck = document.getElementById('optCheck');
+
+      const createSection = document.getElementById('createSection');
+
+      const checkSection = document.getElementById('checkSection');
+
+      const createRandom = document.getElementById('createRandom');
+
+      const createPersonal = document.getElementById('createPersonal');
+
+      const personalInput = document.getElementById('personalInput');
+
+      const generatePersonal = document.getElementById('generatePersonal');
+
+      const generatedPassword = document.getElementById('generatedPassword');
+
+      const generatedFeedback = document.getElementById('generatedFeedback');
+
+      const toggleGenerated = document.getElementById('toggleGenerated');
+
+      const copyGenerated = document.getElementById('copyGenerated');
+
+      const passwordInput = document.getElementById('passwordInput');
+
+      const toggleBtn = document.getElementById('toggleBtn');
+
+      const copyBtn = document.getElementById('copyBtn');
+
+      const pasteBtn = document.getElementById('pasteBtn');
+
+      const feedback = document.getElementById('feedback');
+
+      const simulateBtn = document.getElementById('simulateBtn');
+
+      const terminal = document.getElementById('terminal');
+
+      const submitReview = document.getElementById('submitReview');
+
+      const readFeedback = document.getElementById('readFeedback');
+
+      const reviewText = document.getElementById('reviewText');
+
+      const reviewName = document.getElementById('reviewName');
+
+      const feedbackList = document.getElementById('feedbackList');
+
+      // --- Load reviews from localStorage ---
+
+      let reviews = [];
+
+      const STORAGE_KEY = 'aiPasswordAdvisorReviews';
+
+      function loadReviews() {
+
+        const raw = localStorage.getItem(STORAGE_KEY);
+
+        if (raw) {
+
+          try {
+
+            const arr = JSON.parse(raw);
+
+            if (Array.isArray(arr)) {
+
+              reviews = arr;
+
+            }
+
+          } catch (e) {
+
+            console.error('Failed to parse saved reviews:', e);
+
+          }
+
+        }
+
+      }
+
+      function saveReviews() {
+
+        try {
+
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+
+        } catch (e) {
+
+          console.error('Failed to save reviews:', e);
+
+        }
+
+      }
+
+      function renderFeedbackList(openAfter = false) {
+
+        feedbackList.innerHTML = '';
+
+        if (reviews.length === 0) {
+
+          feedbackList.innerHTML = '<div style="color:#ddd">No feedback yet.</div>';
+
+        } else {
+
+          // show latest first
+
+          reviews.slice().reverse().forEach(r => {
+
+            const entry = document.createElement('div');
+
+            entry.style.padding = '8px';
+
+            entry.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+
+            // escape HTML
+
+            function esc(s) {
+
+              return ('' + s).replace(/[&<>"']/g, c => ({
+
+                '&': '&amp;',
+
+                '<': '&lt;',
+
+                '>': '&gt;',
+
+                '"': '&quot;',
+
+                "'": '&#39;'
+
+              }[c]));
+
+            }
+
+            entry.innerHTML =
+
+              `<strong style="color:#fff">${esc(r.name)}</strong> — ` +
+
+              `<span style="color:#9ec5ff;font-size:12px">${new Date(r.time).toLocaleString()}</span>` +
+
+              `<div style="color:#ddd;margin-top:6px">${esc(r.text)}</div>`;
+
+            feedbackList.appendChild(entry);
+
+          });
+
+        }
+
+        if (openAfter) {
+
+          feedbackList.scrollIntoView({ behavior: 'smooth' });
+
+        }
+
+      }
+
+      // Initially load & render
+
+      loadReviews();
+
+      renderFeedbackList();
+
+      // --- Start advisor ---
+
+      startBtn.addEventListener('click', () => {
+
+        advisorSection.style.display = 'block';
+
+        startBtn.disabled = true;
+
+        startBtn.textContent = 'Advisor Started';
+
+      });
+
+      // --- Section switching ---
+
+      optCreate.addEventListener('click', () => {
+
+        createSection.style.display = 'block';
+
+        checkSection.style.display = 'none';
+
+      });
+
+      optCheck.addEventListener('click', () => {
+
+        checkSection.style.display = 'block';
+
+        createSection.style.display = 'none';
+
+      });
+
+      // --- Random password generation ---
+
+      createRandom.addEventListener('click', () => {
+
+        const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=';
+
+        let pass = '';
+
+        for (let i = 0; i < 14; i++) {
+
+          pass += charset[Math.floor(Math.random() * charset.length)];
+
+        }
+
+        generatedPassword.value = pass;
+
+        autoFeedback(pass, generatedFeedback);
+
+      });
+
+      // --- Personal generation ---
+
+      createPersonal.addEventListener('click', () => {
+
+        personalInput.style.display = 'block';
+
+      });
+
+      generatePersonal.addEventListener('click', () => {
+
+        const n = (document.getElementById('name').value || '').trim();
+
+        const y = (document.getElementById('year').value || '').trim();
+
+        const p = (document.getElementById('pet').value || '').trim();
+
+        const place = (document.getElementById('place').value || '').trim();
+
+        const age = (document.getElementById('age').value || '').trim();
+
+        const partA = (n ? n[0].toUpperCase() + n.slice(1).toLowerCase() : 'User');
+
+        const partB = (p ? p[0].toLowerCase() + p.slice(1) : 'Pet');
+
+        const yearFragment = y ? y.slice(-2) : Math.floor(Math.random() * 90 + 10).toString();
+
+        const extra = '!#' + (age || '99');
+
+        const pass = `${partA}.${partB}${yearFragment}${extra}`;
+
+        generatedPassword.value = pass;
+
+        autoFeedback(pass, generatedFeedback);
+
+      });
+
+      // --- Toggle show/hide for generated & check inputs ---
+
+      toggleGenerated.addEventListener('click', () => {
+
+        generatedPassword.type = generatedPassword.type === 'password' ? 'text' : 'password';
+
+      });
+
+      toggleBtn.addEventListener('click', () => {
+
+        passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+
+      });
+
+      // --- Copy / Paste ---
+
+      copyGenerated.addEventListener('click', async () => {
+
+        try {
+
+          await navigator.clipboard.writeText(generatedPassword.value || '');
+
+          alert('Copied generated password');
+
+        } catch (e) {
+
+          alert('Copy failed');
+
+        }
+
+      });
+
+      copyBtn.addEventListener('click', async () => {
+
+        try {
+
+          await navigator.clipboard.writeText(passwordInput.value || '');
+
+          alert('Copied password');
+
+        } catch (e) {
+
+          alert('Copy failed');
+
+        }
+
+      });
+
+      pasteBtn.addEventListener('click', async () => {
+
+        try {
+
+          const txt = await navigator.clipboard.readText();
+
+          passwordInput.value = txt;
+
+          updateFeedback(txt, feedback);
+
+        } catch (e) {
+
+          alert('Paste failed or permission denied');
+
+        }
+
+      });
+
+      // --- Live check feedback ---
+
+      passwordInput.addEventListener('input', () => updateFeedback(passwordInput.value, feedback));
+
+      // --- Hacker simulator ---
+
+      simulateBtn.addEventListener('click', async () => {
+
+        terminal.innerHTML = '';
+
+        const pw = generatedPassword.value || passwordInput.value || '';
+
+        if (!pw) {
+
+          alert('Enter or generate a password first.');
+
+          return;
+
+        }
+
+        const strength = calculateScore(pw); // 0–100
+
+        const commands = [
+
+          'nmap -sV 192.168.1.10',
+
+          'hydra -L users.txt -P passwords.txt ssh://target',
+
+          'john --wordlist=passwords.txt --format=raw-md5 target_hash',
+
+          'medusa -h 192.168.1.10 -U users.txt -P passwords.txt'
+
+        ];
+
+        for (let i = 0; i < commands.length; i++) {
+
+          terminal.innerHTML += `$ ${commands[i]}<br>`;
+
+          terminal.scrollTop = terminal.scrollHeight;
+
+          await new Promise(r => setTimeout(r, 1800));
+
+        }
+
+        if (strength < 50) {
+
+          terminal.innerHTML += `<br><span style="color:red;font-weight:bold;">ACCESS GRANTED — Password Hacked!</span><br>`;
+
+          alert('Weak password detected. ACCESS GRANTED in simulation.');
+
+        } else {
+
+          terminal.innerHTML += `<br><span style="color:limegreen;font-weight:bold;">ACCESS DENIED — Password Protected by Lokesh AI Advisor</span><br>`;
+
+        }
+
+        terminal.scrollTop = terminal.scrollHeight;
+
+      });
+
+      // --- Reviews: store & display ---
+
+      submitReview.addEventListener('click', () => {
+
+        const name = (reviewName.value || '').trim() || 'Anonymous';
+
+        const text = (reviewText.value || '').trim();
+
+        if (!text) {
+
+          alert('Please write your feedback before submitting.');
+
+          return;
+
+        }
+
+        const rec = {
+
+          name,
+
+          text,
+
+          time: new Date().toISOString()
+
+        };
+
+        reviews.push(rec);
+
+        saveReviews();
+
+        reviewText.value = '';
+
+        reviewName.value = '';
+
+        alert('Thank you — your review was saved.');
+
+        renderFeedbackList();
+
+      });
+
+      readFeedback.addEventListener('click', () => {
+
+        renderFeedbackList(true);
+
+      });
+
+      function updateFeedback(pw, el) {
+
+        const score = calculateScore(pw);
+
+        const label = score < 40 ? 'Weak' : score < 70 ? 'Medium' : score < 90 ? 'Strong' : 'Very Strong';
+
+        const entropyEst = estimateEntropyBits(pw);
+
+        const suggestions = [];
+
+        if (pw.length < 12) suggestions.push('Use at least 12 characters');
+
+        if (!(/[A-Z]/.test(pw))) suggestions.push('Add uppercase letters');
+
+        if (!(/[a-z]/.test(pw))) suggestions.push('Add lowercase letters');
+
+        if (!(/\d/.test(pw))) suggestions.push('Add digits');
+
+        if (!(/[^A-Za-z0-9]/.test(pw))) suggestions.push('Add special characters (!@#$...)');
+
+        el.innerHTML =
+
+          `Strength: <strong>${label}</strong> (${score}%)<br>` +
+
+          `Estimated entropy: ${entropyEst} bits<br>` +
+
+          (suggestions.length ? 'Suggestions: ' + suggestions.join(', ') : 'Good job — looks diverse.');
+
+      }
+
+      function calculateScore(pw) {
+
+        if (!pw) return 0;
+
+        let score = 0;
+
+        if (pw.length >= 16) score += 35;
+
+        else if (pw.length >= 12) score += 20;
+
+        else if (pw.length >= 8) score += 10;
+
+        if (/[A-Z]/.test(pw)) score += 20;
+
+        if (/[a-z]/.test(pw)) score += 15;
+
+        if (/\d/.test(pw)) score += 15;
+
+        if (/[^A-Za-z0-9]/.test(pw)) score += 15;
+
+        return Math.min(100, score);
+
+      }
+
+      function estimateEntropyBits(s) {
+
+        if (!s) return 0;
+
+        const freq = {};
+
+        for (const ch of s) freq[ch] = (freq[ch] || 0) + 1;
+
+        let H = 0;
+
+        const L = s.length;
+
+        for (const k in freq) {
+
+          const p = freq[k] / L;
+
+          H -= p * Math.log2(p);
+
+        }
+
+        return Math.round(H * L * 100) / 100;
+
+      }
+
+    });
+
+  </script>
+
+</body>
+
+</html>
